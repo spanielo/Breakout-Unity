@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
 {
+    public static MainManager Instance = null;
+    
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
@@ -18,6 +20,7 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
+    public string playername = "Unknown Champion";
     
     // Start is called before the first frame update
     void Start()
@@ -38,6 +41,19 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    
     private void Update()
     {
         if (!m_Started)
@@ -57,7 +73,7 @@ public class MainManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                SceneManager.LoadScene(0);
             }
         }
     }
